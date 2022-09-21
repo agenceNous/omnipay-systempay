@@ -3,6 +3,7 @@
 namespace Omnipay\SystemPay\Message;
 
 use Omnipay\Common\Message\AbstractRequest as OmnipayAbstractRequest;
+use Omnipay\SystemPay\Message\PurchaseResponse;
 use Omnipay\Common\Message\ResponseInterface;
 
 /**
@@ -25,7 +26,10 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
         return $this->createResponse($responseData);
     }
 
-    abstract public function getEndpoint();
+    public function getEndpoint()
+    {
+        return $this->liveEndPoint;
+    }
 
     /**
      * @return mixed
@@ -249,5 +253,10 @@ abstract class AbstractRequest extends OmnipayAbstractRequest
         $data[] = $this->getCertificate();
 
         return base64_encode(hash_hmac('sha256', implode('+', $data), $this->getCertificate(), true));
+    }
+
+    public function createResponse($data, $statusCode = null)
+    {
+        return $this->response = new PurchaseResponse($this, $data, $statusCode);
     }
 }
