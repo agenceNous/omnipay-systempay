@@ -92,8 +92,6 @@ class PurchaseRequest extends AbstractRequest
             $data['vads_currency'] = $this->getCurrencyNumeric();
         }
 
-        $data['vads_ctx_mode'] = 'TEST';
-        
         $metadata = $this->getMetadata();
         if (!empty($metadata)) {
             foreach ($metadata as $key => $value) {
